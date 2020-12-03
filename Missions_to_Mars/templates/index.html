@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mission to Mars</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container-fluid">
+    <div style='height:200px;' class="jumbotron text-center">
+      <h1>Mission to Mars</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data!</a></p>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2 style='font-size: 18px;font-weight: bold;'>Latest Mars News</h2>
+        <h4 style='font-size: 10px;font-weight: bold;'>{{ mars_data.news_title }}</h4>
+        <p style='font-size: 10px'>{{ mars_data.news_p }}</p> 
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+        <p style='font-size: 22px;font-weight: bold;'>Featured Mars Image</p>
+        <img style="width: 600px;height: 270px" src="{{ mars_data.featured_image_url | default('static.images/error.png') }}" class='img-responsive' alt="featured_image_url">
+      </div>
+
+      <div class="col-md-4">
+        <h4 style="font-size: 14px;font-weight:bold;">Mars Facts</h4>
+        {{ mars_data.fact_table | safe }}
+      </div>
+    </div>
+
+    <div class="row">
+        <br>
+        <br>
+        <h2 style='font-size: 26px;text-align: center;font-weight: bolder;'>Mars Hemispheres</h2>
+
+      </div>
+
+
+      <div style="width: 55%;display: block;margin-left: auto;margin-right: auto;" class="row">
+        {% for hemisphere in mars_data.hemisphere_image_urls %}
+        <div class="col-md-6">
+          <div class="card"> 
+           <div class='thumbnail'>
+            <img  class="card-img-top" src="{{ hemisphere.img_url }}"/>
+          </div>
+            <div class="card-body">
+              <p style='font-size: 12px;text-align: center;font-weight: bold;'class="card-text">{{hemisphere.title}}    </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+
+
+
+
+    
+
+  </div>
+
+  
+</body>
+</html>

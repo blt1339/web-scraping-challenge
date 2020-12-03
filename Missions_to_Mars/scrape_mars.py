@@ -2,7 +2,6 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
-import pprint
 import time
 
 def init_browser():
@@ -19,7 +18,7 @@ def scrape():
 
     # Define Mars news url and visit it
     news_url = 'https://mars.nasa.gov/news/'
-    browser.visit(url)
+    browser.visit(news_url)
 
     time.sleep(5)
 
@@ -74,8 +73,12 @@ def scrape():
     # Update the column names
     mars_facts_df.columns = ['Description','Value']
 
+    # Set the index to Description
+    mars_facts_df = mars_facts_df.set_index('Description')
+
     # Render DataFrame into HTML
-    mars_html = mars_facts_df.to_html('mars-facts.html')
+    mars_html = mars_facts_df.to_html()
+
 
 
     #  Scrape the the Mars Hemisphere information
@@ -137,11 +140,11 @@ def scrape():
                     "news_title": news_title,
                     "news_p": news_p,
                     "featured_image_url": featured_image_url,
-                    "fact_table": str(mars_html),
-                    "hemisphere_images": hemisphere_image_urls
+                    "fact_table": mars_html,
+                    "hemisphere_image_urls": hemisphere_image_urls
                     }
 
-            # Close the browser after scraping
-            browser.quit()
+    # Close the browser after scraping
+    browser.quit()
 
-        return mars_dict
+    return mars_dict
